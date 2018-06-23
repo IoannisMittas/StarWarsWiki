@@ -1,4 +1,4 @@
 package com.mittas.starwarswiki.data.dao;
 
-public interface PeopleVehiclesJoinDao {
+public interface VehicleDao {
 }

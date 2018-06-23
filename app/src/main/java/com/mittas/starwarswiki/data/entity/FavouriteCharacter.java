@@ -6,18 +6,18 @@ import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity (foreignKeys = @ForeignKey(entity = People.class,
+@Entity (foreignKeys = @ForeignKey(entity = Character.class,
         parentColumns = "id",
-        childColumns = "peopleId",
+        childColumns = "characterId",
         onDelete = CASCADE))
-public class Favourites {
+public class FavouriteCharacter {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int peopleId;
+    private int characterId;
 
-    public Favourites(int peopleId) {
-        this.peopleId = peopleId;
+    public FavouriteCharacter(int peopleId) {
+        this.characterId = peopleId;
     }
 
     public int getId() {
@@ -28,11 +28,11 @@ public class Favourites {
         this.id = id;
     }
 
-    public int getPeopleId() {
-        return peopleId;
+    public int getCharacterId() {
+        return characterId;
     }
 
-    public void setPeopleId(int peopleId) {
-        this.peopleId = peopleId;
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
     }
 }
