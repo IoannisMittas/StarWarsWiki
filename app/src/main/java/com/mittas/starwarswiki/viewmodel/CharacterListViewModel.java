@@ -7,7 +7,7 @@ import android.arch.lifecycle.MediatorLiveData;
 
 import com.mittas.starwarswiki.BasicApp;
 import com.mittas.starwarswiki.StarWarsRepository;
-
+import com.mittas.starwarswiki.data.entity.Character;
 import java.util.List;
 
 public class CharacterListViewModel extends AndroidViewModel{
@@ -23,7 +23,7 @@ public class CharacterListViewModel extends AndroidViewModel{
 
         LiveData<List<Character>> charactersInput = repository.getAllCharacters();
 
-        // observe the changes of the characters from the database and forward them
+        // Observe the changes of the characters from the database and forward them
         observableCharacters.addSource(charactersInput, (characters) -> observableCharacters.setValue(characters));
     }
 
@@ -34,7 +34,7 @@ public class CharacterListViewModel extends AndroidViewModel{
         return observableCharacters;
     }
 
-    public void syncCharacters() {
-        repository.syncCharacters();
+    public void loadCharacters() {
+        repository.loadCharacters();
     }
 }

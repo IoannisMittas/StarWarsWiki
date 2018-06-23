@@ -34,22 +34,7 @@ public class StarWarsRepository {
         return localDb.characterDao().getCharacterById(characterId);
     }
 
-    public void fetchData() {
-        // Reset db for new data are to be fetched
-        executors.diskIO().execute(() -> localDb.clearAllTables());
+    public void loadCharacters() {
 
-        remoteDb.addOnSyncRequestListener(new RemoteDatabase.syncRequestListener() {
-            @Override
-            public void onSuccess(List<Note> allNotes) {
-                if (allNotes != null) {
-                    executors.diskIO().execute(() -> localDb.noteDao().insertNotes(allNotes));
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-                // do nothing
-            }
-        });
     }
 }

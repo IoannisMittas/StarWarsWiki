@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
@@ -68,9 +67,9 @@ public class CharacterListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (!FirebaseHelper.isSignedIn()) {
-            signInWithFirebaseUI();
-        }
+//        if (!FirebaseHelper.isSignedIn()) {
+//            signInWithFirebaseUI();
+//        }
     }
 
 
