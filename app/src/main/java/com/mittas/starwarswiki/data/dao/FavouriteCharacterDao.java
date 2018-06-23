@@ -11,7 +11,7 @@ import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import java.util.List;
 
 @Dao
-public interface FavouriteDao {
+public interface FavouriteCharacterDao {
     @Insert
     void insert(FavouriteCharacter character);
 

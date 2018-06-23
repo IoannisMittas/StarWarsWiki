@@ -18,8 +18,7 @@ package com.mittas.starwarswiki;
 
 import android.app.Application;
 
-import com.mittas.notes.data.LocalDatabase;
-import com.mittas.notes.data.RemoteDatabase;
+import com.mittas.starwarswiki.data.LocalDatabase;
 
 
 /**
