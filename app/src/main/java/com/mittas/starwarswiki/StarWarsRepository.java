@@ -2,8 +2,7 @@ package com.mittas.starwarswiki;
 
 import android.arch.lifecycle.LiveData;
 
-import android.provider.ContactsContract;
-
+import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 
@@ -12,16 +11,19 @@ import java.util.List;
 public class StarWarsRepository {
     private static StarWarsRepository INSTANCE;
     private final LocalDatabase localDb;
+    private final SwapiService service;
     private final AppExecutors executors;
 
-    private StarWarsRepository(final LocalDatabase localDb, final AppExecutors executors) {
+
+    private StarWarsRepository(final LocalDatabase localDb, final SwapiService service, final AppExecutors executors) {
         this.localDb = localDb;
+        this.service = service;
         this.executors = executors;
     }
 
-    public static StarWarsRepository getInstance(final LocalDatabase localDb, final AppExecutors executors) {
+    public static StarWarsRepository getInstance(final LocalDatabase localDb, final SwapiService service, final AppExecutors executors) {
         if (INSTANCE == null) {
-            INSTANCE = new StarWarsRepository(localDb, executors);
+            INSTANCE = new StarWarsRepository(localDb, service, executors);
         }
         return INSTANCE;
     }
