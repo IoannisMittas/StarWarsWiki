@@ -4,10 +4,14 @@ import android.arch.lifecycle.LiveData;
 
 import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.api.model.CharactersPage;
+import com.mittas.starwarswiki.api.model.FilmsPage;
+import com.mittas.starwarswiki.api.model.VehiclesPage;
 import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
+import com.mittas.starwarswiki.data.entity.Film;
+import com.mittas.starwarswiki.data.entity.Vehicle;
 import com.mittas.starwarswiki.util.SwapiHelperMethods;
 
 import java.util.List;
@@ -90,6 +94,46 @@ public class StarWarsRepository {
                 executors.diskIO().execute(() -> localDb.characterVehicleJoinDao().insert(charVehicleJoin));
             }
         }
+    }
+
+    private void loadFilmPage(int page) {
+        service.getFilmsPage(page).enqueue(new Callback<FilmsPage>() {
+            @Override
+            public void onResponse(Call<FilmsPage> call, Response<FilmsPage> response) {
+                List<Film> films = response.body().results;
+
+                executors.diskIO().execute(() -> localDb.filmDao().insertFilms(films));
+
+                if (response.body().next != null) {
+                    loadFilmPage(page + 1);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FilmsPage> call, Throwable t) {
+                // do nothing
+            }
+        });
+    }
+
+    private void loadVehiclePage(int page) {
+        service.getVehiclesPage(page).enqueue(new Callback<VehiclesPage>() {
+            @Override
+            public void onResponse(Call<VehiclesPage> call, Response<VehiclesPage> response) {
+                List<Vehicle> vehicles = response.body().results;
+
+                executors.diskIO().execute(() -> localDb.vehicleDao().insertVehicles(vehicles));
+
+                if (response.body().next != null) {
+                    loadVehiclePage(page + 1);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehiclesPage> call, Throwable t) {
+                // do nothing
+            }
+        });
     }
 
 }

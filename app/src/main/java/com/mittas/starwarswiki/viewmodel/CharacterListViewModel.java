@@ -34,7 +34,7 @@ public class CharacterListViewModel extends AndroidViewModel{
         return observableCharacters;
     }
 
-    public void loadCharacters() {
-        repository.loadCharacters();
+    public void loadData() {
+        repository.loadData();
     }
 }

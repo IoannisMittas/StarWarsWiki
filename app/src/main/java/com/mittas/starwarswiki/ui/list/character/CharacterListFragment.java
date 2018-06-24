@@ -60,7 +60,7 @@ public class CharacterListFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(CharacterListViewModel.class);
 
         // TODO temporary
-        viewModel.loadCharacters();
+        viewModel.loadData();
 
         subscribeUi();
     }
