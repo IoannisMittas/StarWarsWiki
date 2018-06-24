@@ -2,28 +2,27 @@ package com.mittas.starwarswiki.ui.list.character;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -60,6 +59,9 @@ public class CharacterListFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(CharacterListViewModel.class);
 
+        // TODO temporary
+        viewModel.loadCharacters();
+
         subscribeUi();
     }
 
@@ -71,7 +73,6 @@ public class CharacterListFragment extends Fragment {
 //            signInWithFirebaseUI();
 //        }
     }
-
 
 
     @Override

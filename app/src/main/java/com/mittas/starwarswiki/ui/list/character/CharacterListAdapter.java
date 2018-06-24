@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.mittas.starwarswiki.R;
 
 import com.mittas.starwarswiki.data.entity.Character;
 
@@ -59,7 +60,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
         ViewHolder(View view) {
             super(view);
-            nameTextView = view.findViewById(R.id.title_textview);
+            nameTextView = view.findViewById(R.id.name_textview);
         }
     }
 
