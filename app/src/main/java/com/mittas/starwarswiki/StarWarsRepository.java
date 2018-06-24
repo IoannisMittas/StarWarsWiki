@@ -6,6 +6,9 @@ import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.api.model.CharactersPage;
 import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
+import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
+import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
+import com.mittas.starwarswiki.util.SwapiHelperMethods;
 
 import java.util.List;
 
@@ -41,21 +44,24 @@ public class StarWarsRepository {
         return localDb.characterDao().getCharacterById(characterId);
     }
 
-    public void loadCharacters() {
-        // Load the first page
+    public void loadData() {
         loadCharacterPage(1);
+        loadFilmPage(1);
+        loadVehiclePage(1);
     }
 
     private void loadCharacterPage(int page) {
         service.getCharactersPage(page).enqueue(new Callback<CharactersPage>() {
             @Override
             public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
-                List<Character> characters= response.body().results;
+                List<Character> characters = response.body().results;
 
                 executors.diskIO().execute(() -> localDb.characterDao().insertCharacters(characters));
 
-                if(response.body().next != null) {
-                    loadCharacterPage(page +1);
+                insertCharacterTableLinks(characters);
+
+                if (response.body().next != null) {
+                    loadCharacterPage(page + 1);
                 }
             }
 
@@ -64,6 +70,26 @@ public class StarWarsRepository {
                 // do nothing
             }
         });
+    }
+
+    private void insertCharacterTableLinks(List<Character> characters) {
+        for (Character character : characters) {
+            int charId = character.getId();
+
+            // Create character-film link table
+            for (String filmUrl : character.getFilmsSwapiUrls()) {
+                int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
+                CharacterFilmJoin charFilmJoin = new CharacterFilmJoin(charId, filmId);
+                executors.diskIO().execute(() -> localDb.characterFilmJoinDao().insert(charFilmJoin));
+            }
+
+            // Create character-vehicle link table
+            for (String vehicleUrl : character.getVehiclesSwapiUrls()) {
+                int vehicleId = SwapiHelperMethods.getIdFromUrl(vehicleUrl);
+                CharacterVehicleJoin charVehicleJoin = new CharacterVehicleJoin(charId, vehicleId);
+                executors.diskIO().execute(() -> localDb.characterVehicleJoinDao().insert(charVehicleJoin));
+            }
+        }
     }
 
 }
