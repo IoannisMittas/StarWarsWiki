@@ -3,6 +3,7 @@ package com.mittas.starwarswiki;
 import android.arch.lifecycle.LiveData;
 
 import com.mittas.starwarswiki.api.SwapiService;
+import com.mittas.starwarswiki.api.model.CharactersPage;
 import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 
@@ -41,21 +42,28 @@ public class StarWarsRepository {
     }
 
     public void loadCharacters() {
-        int page = 1;
-        boolean hasNextPage = true;
-        while (hasNextPage) {
-            service.getAllCharacters(page).enqueue(new Callback<List<Character>>() {
-                @Override
-                public void onResponse(Call<List<Character>> call, Response<List<Character>> response) {
-                    if(response.next )
-                }
+        // Load the first page
+        loadCharacterPage(1);
+    }
 
-                @Override
-                public void onFailure(Call<List<Character>> call, Throwable t) {
+    private void loadCharacterPage(int page) {
+        service.getCharactersPage(page).enqueue(new Callback<CharactersPage>() {
+            @Override
+            public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
+                List<Character> characters= response.body().results;
 
+                executors.diskIO().execute(() -> localDb.characterDao().insertCharacters(characters));
+
+                if(response.body().next != null) {
+                    loadCharacterPage(page +1);
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<CharactersPage> call, Throwable t) {
+                // do nothing
+            }
+        });
     }
 
 }

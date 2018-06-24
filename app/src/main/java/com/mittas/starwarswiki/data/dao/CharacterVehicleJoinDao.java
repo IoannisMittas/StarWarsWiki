@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
 import com.mittas.starwarswiki.data.entity.Vehicle;
+import com.mittas.starwarswiki.data.entity.Character;
 
 
 import java.util.List;

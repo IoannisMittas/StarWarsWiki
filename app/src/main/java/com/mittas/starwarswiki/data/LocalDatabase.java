@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.dao.CharacterDao;
 import com.mittas.starwarswiki.data.dao.CharacterFilmJoinDao;
 import com.mittas.starwarswiki.data.dao.CharacterVehicleJoinDao;

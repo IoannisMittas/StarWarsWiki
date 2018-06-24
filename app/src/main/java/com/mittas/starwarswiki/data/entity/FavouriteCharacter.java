@@ -17,8 +17,8 @@ public class FavouriteCharacter {
 
     private int characterId;
 
-    public FavouriteCharacter(int peopleId) {
-        this.characterId = peopleId;
+    public FavouriteCharacter(int characterId) {
+        this.characterId = characterId;
     }
 
     public int getId() {
