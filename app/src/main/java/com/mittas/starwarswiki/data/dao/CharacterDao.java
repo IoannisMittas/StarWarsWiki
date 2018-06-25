@@ -19,10 +19,10 @@ public interface CharacterDao {
     @Query("SELECT * FROM character")
     LiveData<List<Character>> getAllCharacters();
 
-    @Insert(onConflict = REPLACE)
+    @Insert
     long insertCharacter(Character character);
 
-    @Insert(onConflict = REPLACE)
+    @Insert
     void insertCharacters(List<Character> characters);
 
     @Query("UPDATE character SET homeworldName = :name WHERE id = :id")

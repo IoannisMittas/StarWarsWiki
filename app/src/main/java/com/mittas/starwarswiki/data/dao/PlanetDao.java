@@ -14,7 +14,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface PlanetDao {
-    @Insert(onConflict = REPLACE)
+    @Insert
     void insertPlanets(List<Planet> planets);
 
     @Query("SELECT * FROM planet WHERE id = :id")

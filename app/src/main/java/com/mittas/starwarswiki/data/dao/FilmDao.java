@@ -11,6 +11,6 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface FilmDao {
-    @Insert(onConflict = REPLACE)
+    @Insert
     void insertFilms(List<Film> films);
 }
