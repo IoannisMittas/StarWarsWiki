@@ -1,6 +1,5 @@
 package com.mittas.starwarswiki.ui.list.character;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
@@ -23,7 +23,6 @@ import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CharacterListFragment extends Fragment {
@@ -40,6 +39,14 @@ public class CharacterListFragment extends Fragment {
         intent.putExtra(EXTRA_CHARACTER_ID, characterId);
         startActivity(intent);
     };
+
+    private CharacterListAdapter.OnFavouriteToggleListener favouriteToggleListener = ((buttonView, isChecked, charId) -> {
+        if (isChecked) {
+            viewModel.setCharAsFavourite(charId);
+        } else {
+            viewModel.removeCharFromFavourites(charId);
+        }
+    });
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -98,7 +105,7 @@ public class CharacterListFragment extends Fragment {
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        adapter = new CharacterListAdapter(new ArrayList<Character>(), itemClickListener);
+        adapter = new CharacterListAdapter(new ArrayList<Character>(), itemClickListener, favouriteToggleListener);
         recyclerView.setAdapter(adapter);
     }
 

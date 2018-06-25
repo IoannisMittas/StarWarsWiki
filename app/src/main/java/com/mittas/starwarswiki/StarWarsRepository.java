@@ -46,6 +46,10 @@ public class StarWarsRepository {
         return localDb.characterDao().getAllCharacters();
     }
 
+    public LiveData<Character> getCharacterById(final int characterId) {
+        return localDb.characterDao().getCharacterById(characterId);
+    }
+
     public LiveData<List<Film>> getFilmsByCharacterId(final int characterId) {
         return localDb.characterFilmJoinDao().getFilmsByCharacterId(characterId);
     }
@@ -54,9 +58,14 @@ public class StarWarsRepository {
         return localDb.characterVehicleJoinDao().getVehiclesByCharacterId(characterId);
     }
 
-    public LiveData<Character> getCharacterById(final int characterId) {
-        return localDb.characterDao().getCharacterById(characterId);
+    public void setCharAsFavourite(final int characterId) {
+
     }
+
+    public void removeCharFromFavourites(final int characterId) {
+
+    }
+
 
     public void loadData() {
         loadCharactersPage(1);

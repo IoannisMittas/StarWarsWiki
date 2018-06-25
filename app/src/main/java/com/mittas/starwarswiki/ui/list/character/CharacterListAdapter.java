@@ -2,28 +2,37 @@ package com.mittas.starwarswiki.ui.list.character;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import com.mittas.starwarswiki.R;
 
 import com.mittas.starwarswiki.data.entity.Character;
 
 import java.util.List;
 
-public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder>{
+public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder> {
     private List<Character> characterList;
     private OnItemClickListener clickListener;
+    private OnFavouriteToggleListener favouriteToggleListener;
 
     public interface OnItemClickListener {
         void onItemClick(View view, int characterId);
     }
 
-    public CharacterListAdapter(List<Character> characterList, OnItemClickListener clickListener) {
+    public interface OnFavouriteToggleListener {
+        void onCheckedChanged(CompoundButton buttonView, boolean isChecked, int charId);
+    }
+
+    public CharacterListAdapter(List<Character> characterList, OnItemClickListener clickListener,
+                                OnFavouriteToggleListener favouriteToggleListener) {
         this.characterList = characterList;
         this.clickListener = clickListener;
+        this.favouriteToggleListener = favouriteToggleListener;
     }
 
     @NonNull
@@ -44,6 +53,13 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
                 clickListener.onItemClick(v, character.getId());
             }
         }));
+
+        holder.favouriteToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                favouriteToggleListener.onCheckedChanged(buttonView, isChecked, character.getId());
+            }
+        });
     }
 
     @Override
@@ -58,10 +74,12 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
+        private ToggleButton favouriteToggle;
 
         ViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.name_textview);
+            favouriteToggle = view.findViewById(R.id.favouriteToggle);
         }
     }
 
