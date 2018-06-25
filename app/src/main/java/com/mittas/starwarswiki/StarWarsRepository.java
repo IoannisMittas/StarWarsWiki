@@ -96,13 +96,15 @@ public class StarWarsRepository {
     }
 
     public void loadData() {
-        loadCharactersPage(1);
-        loadFilmsPage(1);
-        loadVehiclesPage(1);
-        loadPlanetsPage(1);
+        // Load pages recursively
+        int startingPage = 1;
+        loadCharacters(startingPage);
+        loadFilms(startingPage);
+        loadVehicles(startingPage);
+        loadPlanets(startingPage);
     }
 
-    private void loadCharactersPage(int page) {
+    private void loadCharacters(int page) {
         service.getCharactersPage(page).enqueue(new Callback<CharactersPage>() {
             @Override
             public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
@@ -119,7 +121,7 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadCharactersPage(page + 1);
+                    loadCharacters(page + 1);
                 }
             }
 
@@ -167,7 +169,7 @@ public class StarWarsRepository {
         }
     }
 
-    private void loadFilmsPage(int page) {
+    private void loadFilms(int page) {
         service.getFilmsPage(page).enqueue(new Callback<FilmsPage>() {
             @Override
             public void onResponse(Call<FilmsPage> call, Response<FilmsPage> response) {
@@ -178,7 +180,7 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadFilmsPage(page + 1);
+                    loadFilms(page + 1);
                 }
             }
 
@@ -189,7 +191,7 @@ public class StarWarsRepository {
         });
     }
 
-    private void loadVehiclesPage(int page) {
+    private void loadVehicles(int page) {
         service.getVehiclesPage(page).enqueue(new Callback<VehiclesPage>() {
             @Override
             public void onResponse(Call<VehiclesPage> call, Response<VehiclesPage> response) {
@@ -200,7 +202,7 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadVehiclesPage(page + 1);
+                    loadVehicles(page + 1);
                 }
             }
 
@@ -211,7 +213,7 @@ public class StarWarsRepository {
         });
     }
 
-    private void loadPlanetsPage(int page) {
+    private void loadPlanets(int page) {
         service.getPlanetsPage(page).enqueue(new Callback<PlanetsPage>() {
             @Override
             public void onResponse(Call<PlanetsPage> call, Response<PlanetsPage> response) {
@@ -222,7 +224,7 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadPlanetsPage(page + 1);
+                    loadPlanets(page + 1);
                 }
             }
 
