@@ -11,4 +11,6 @@
     <string name="title_textview_films">Films</string>
     <string name="title_textview_vehicles">Vehicles</string>
 
+    <string name="action_favourites">Favourites</string>
+
 </resources>

@@ -47,6 +47,10 @@ public class StarWarsRepository {
         return localDb.characterDao().getAllCharacters();
     }
 
+    public LiveData<List<Character>> getAllFavouriteCharacters() {
+        return localDb.favouriteCharacterDao().getAllFavouriteCharacters();
+    }
+
     public LiveData<Character> getCharacterById(final int characterId) {
         return localDb.characterDao().getCharacterById(characterId);
     }

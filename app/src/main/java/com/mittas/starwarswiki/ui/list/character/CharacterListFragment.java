@@ -19,7 +19,9 @@ import android.widget.CompoundButton;
 
 import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
+import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
+import com.mittas.starwarswiki.ui.list.favourite.FavouriteCharacterListActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
 
 import java.util.ArrayList;
@@ -85,11 +87,10 @@ public class CharacterListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // TODO : add case
-//            case R.id.action_sign_out:
-//                FirebaseHelper.handleSignOutWithFirebaseUI(getActivity());
-//                signInWithFirebaseUI();
-//                return true;
+            case R.id.action_favourites:
+                Intent intent = new Intent(getActivity(), FavouriteCharacterListActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
