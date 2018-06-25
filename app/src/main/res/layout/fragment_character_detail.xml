@@ -15,15 +15,17 @@
 
         <TextView
             android:id="@+id/title_textview_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/title_textview_name"
             android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
         <TextView
             android:id="@+id/name_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
     </LinearLayout>
 
@@ -36,15 +38,17 @@
 
         <TextView
             android:id="@+id/title_textview_birth_year"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/title_textview_birth_year"
             android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
         <TextView
             android:id="@+id/birth_year_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
     </LinearLayout>
 
@@ -57,29 +61,61 @@
 
         <TextView
             android:id="@+id/title_textview_homeworld"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/title_textview_homeworld"
             android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
         <TextView
             android:id="@+id/homeworld_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
     </LinearLayout>
 
     <!-- Films -->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:padding="4dp">
+
+       <TextView
+           android:id="@+id/title_textview_films"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/title_textview_films"
+           android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/films_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+   </LinearLayout>
 
     <!-- Vehicles -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/vehicles_recyclerview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/title_textview_vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_textview_vehicles"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vehicles_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
 
 </LinearLayout>
 

@@ -8,5 +8,7 @@
     <string name="title_textview_name">Name</string>
     <string name="title_textview_birth_year">Birth Year</string>
     <string name="title_textview_homeworld">Homeworld</string>
+    <string name="title_textview_films">Films</string>
+    <string name="title_textview_vehicles">Vehicles</string>
 
 </resources>

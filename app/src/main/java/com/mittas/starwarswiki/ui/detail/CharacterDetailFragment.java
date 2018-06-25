@@ -96,18 +96,18 @@ public class CharacterDetailFragment extends Fragment {
         filmListRecyclerView = rootView.findViewById(R.id.films_recyclerview);
         LinearLayoutManager filmLayoutManager = new LinearLayoutManager(getActivity());
         filmListRecyclerView.setLayoutManager(filmLayoutManager);
-        DividerItemDecoration filmDividerItemDecoration = new DividerItemDecoration(filmListRecyclerView.getContext(),
-                filmLayoutManager.getOrientation());
-        filmListRecyclerView.addItemDecoration(filmDividerItemDecoration);
+//        DividerItemDecoration filmDividerItemDecoration = new DividerItemDecoration(filmListRecyclerView.getContext(),
+//                filmLayoutManager.getOrientation());
+//        filmListRecyclerView.addItemDecoration(filmDividerItemDecoration);
         filmListAdapter = new FilmListAdapter(new ArrayList<>());
         filmListRecyclerView.setAdapter(filmListAdapter);
 
         vehicleListRecyclerView = rootView.findViewById(R.id.vehicles_recyclerview);
         LinearLayoutManager vehicleLayoutManager = new LinearLayoutManager(getActivity());
         vehicleListRecyclerView.setLayoutManager(vehicleLayoutManager);
-        DividerItemDecoration vehicleDividerItemDecoration = new DividerItemDecoration(vehicleListRecyclerView.getContext(),
-                vehicleLayoutManager.getOrientation());
-        vehicleListRecyclerView.addItemDecoration(vehicleDividerItemDecoration);
+//        DividerItemDecoration vehicleDividerItemDecoration = new DividerItemDecoration(vehicleListRecyclerView.getContext(),
+//                vehicleLayoutManager.getOrientation());
+//        vehicleListRecyclerView.addItemDecoration(vehicleDividerItemDecoration);
         vehicleListAdapter = new VehicleListAdapter(new ArrayList<>());
         vehicleListRecyclerView.setAdapter(vehicleListAdapter);
     }

@@ -11,6 +11,6 @@
         android:id="@+id/item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
         tools:text="Return of the Jedi" />
 </LinearLayout>
