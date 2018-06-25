@@ -63,7 +63,25 @@ public class StarWarsRepository {
         return localDb.characterVehicleJoinDao().getVehiclesByCharacterId(characterId);
     }
 
-    public void setCharAsFavourite(final int characterId) {
+    public void onFavouriteToggleClicked(final int characterId) {
+        executors.diskIO().execute(() -> {
+            int isFavourite = localDb.characterDao().isCharacterFavourite(characterId);
+
+            // Favourite toggle has been clicked. So, if character was favourite, we
+            // remove it from favourites. And vice versa.
+            if (isFavourite == 1) {
+                removeCharFromFavouriteCharacterTable(characterId);
+
+                localDb.characterDao().unFavouriteChar(characterId);
+            } else {
+                insertCharIntoFavouriteCharacterTable(characterId);
+
+                localDb.characterDao().setCharAsFavourite(characterId);
+            }
+        });
+    }
+
+    private void insertCharIntoFavouriteCharacterTable(final int characterId) {
         executors.diskIO().execute(() -> {
             FavouriteCharacter favouriteChar = new FavouriteCharacter();
             long favouriteCharId = localDb.favouriteCharacterDao().insert(favouriteChar);
@@ -71,14 +89,10 @@ public class StarWarsRepository {
         });
     }
 
-    public void removeCharFromFavourites(final int characterId) {
+    private void removeCharFromFavouriteCharacterTable(final int characterId) {
         executors.diskIO().execute(() -> {
             localDb.favouriteCharacterDao().deleteByCharacterId(characterId);
         });
-    }
-
-    public void onFavouriteToggleClicked(final int characterId) {
-
     }
 
     public void loadData() {

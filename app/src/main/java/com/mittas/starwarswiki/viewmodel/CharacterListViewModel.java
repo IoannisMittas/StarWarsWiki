@@ -38,14 +38,6 @@ public class CharacterListViewModel extends AndroidViewModel{
         repository.loadData();
     }
 
-    public void setCharAsFavourite(int charId) {
-        repository.setCharAsFavourite(charId);
-    }
-
-    public void removeCharFromFavourites(int charId) {
-        repository.removeCharFromFavourites(charId);
-    }
-
     public void onFavouriteToggleClicked(int charId) {
         repository.onFavouriteToggleClicked(charId);
     }

@@ -40,6 +40,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     @Override
     public void onBindViewHolder(@NonNull CharacterListAdapter.ViewHolder holder, int position) {
         Character character = characterList.get(position);
+
         holder.nameTextView.setText(character.getName());
 
         holder.itemView.setOnClickListener((new View.OnClickListener() {
@@ -48,6 +49,13 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
                 listItemClickListener.onItemClick(v, character.getId());
             }
         }));
+
+        int isFavourite = character.getIsFavourite();
+        if(isFavourite == 1) {
+            holder.favouriteToggle.setImageResource(R.drawable.favourite_toggle_on);
+        } else {
+            holder.favouriteToggle.setImageResource(R.drawable.favourite_toggle_off);
+        }
 
         holder.favouriteToggle.setOnClickListener(new View.OnClickListener() {
             @Override

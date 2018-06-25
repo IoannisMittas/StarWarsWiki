@@ -27,4 +27,13 @@ public interface CharacterDao {
 
     @Query("UPDATE character SET homeworldName = :name WHERE id = :id")
     void updateCharHomeworldNameById(int id, String name);
+
+    @Query("SELECT isFavourite FROM character WHERE id = :id")
+    int isCharacterFavourite(int id);
+
+    @Query("UPDATE character SET isFavourite = 1 WHERE id = :id")
+    void setCharAsFavourite(int id);
+
+    @Query("UPDATE character SET isFavourite = 0 WHERE id = :id")
+    void unFavouriteChar(int id);
 }

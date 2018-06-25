@@ -19,11 +19,14 @@ public class Character {
     @SerializedName("birth_year")
     private String birthYear;
 
+    private String homeworldName;
+
+    // isFavourite = 1 for true, isFavourite = 0 for false
+    private int isFavourite;
+
     @Ignore
     @SerializedName("homeworld")
     private String homeworldUrl;
-
-    private String homeworldName;
 
     @Ignore
     @SerializedName("films")
@@ -32,6 +35,7 @@ public class Character {
     @Ignore
     @SerializedName("vehicles")
     private List<String> vehiclesUrls;
+
 
     public Character() {}
 
@@ -95,5 +99,13 @@ public class Character {
 
     public void setVehiclesUrls(List<String> vehiclesUrls) {
         this.vehiclesUrls = vehiclesUrls;
+    }
+
+    public int getIsFavourite() {
+        return isFavourite;
+    }
+
+    public void setIsFavourite(int isFavourite) {
+        this.isFavourite = isFavourite;
     }
 }
