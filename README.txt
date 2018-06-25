@@ -22,11 +22,19 @@ pattern by using LiveData. Also, in ViewModels, Transformations are used to comm
 We do that to  avoid leaking ViewModels, as we want our ViewModels to go away when their respected Views are gone, too.
 A more detailed explanation can be found here: https://medium.com/google-developers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54
 
-
 A Repository is used as a single point of entry for the data. The repository handles data
 communication between the local persistance, which is a Room database, and the remote API (http://swapi.co/api/people).
 The local database serves as the single source of truth, so even after the data are fetched from swapi,they are being saved locally in the db before
 they are exposed to the presentation layer.
+
+
+Because I didn't want to delay the assignment, I didn't implement the search. But if I'd work on it for
+a little more, I would use info from here: https://stackoverflow.com/questions/49656009/implementing-search-with-room,
+https://developer.android.com/training/search/search
+
+
+
+
 
 
 
