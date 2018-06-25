@@ -15,6 +15,10 @@ import java.util.List;
 public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.ViewHolder>{
     private List<Vehicle> vehicleList;
 
+    public VehicleListAdapter(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

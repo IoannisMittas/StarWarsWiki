@@ -20,7 +20,7 @@ public interface CharacterVehicleJoinDao {
     @Query("SELECT * FROM character INNER JOIN character_vehicle_join "
             + "ON character.id = character_vehicle_join.characterId "
             + "WHERE character_vehicle_join.vehicleId = :vehicleId")
-    LiveData<List<Character>> getCharactersByVehicleId(final int vehicleId);
+   LiveData<List<Character>> getCharactersByVehicleId(final int vehicleId);
 
     @Query("SELECT * FROM vehicle INNER JOIN character_vehicle_join "
             + "ON vehicle.id = character_vehicle_join.vehicleId "

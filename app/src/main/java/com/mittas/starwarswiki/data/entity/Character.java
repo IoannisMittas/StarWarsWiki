@@ -17,18 +17,23 @@ public class Character {
     @ColumnInfo(name = "birth_year")
     private String birthYear;
 
+    // TODO fix
     private String homeworld;
 
     @Ignore
-    private List<String> filmsSwapiUrls;
+    private List<String> films;
 
     @Ignore
-    private List<String> vehiclesSwapiUrls;
+    private List<String> vehicles;
+
+    public Character() {}
 
     public Character(String name, String birthYear, String homeworld) {
         this.name = name;
         this.birthYear = birthYear;
         this.homeworld = homeworld;
+        this.films = films;
+        this.vehicles = vehicles;
     }
 
     public int getId() {
@@ -63,11 +68,11 @@ public class Character {
         this.homeworld = homeworld;
     }
 
-    public List<String> getFilmsSwapiUrls() {
-        return filmsSwapiUrls;
+    public List<String> getFilms() {
+        return films;
     }
 
-    public List<String> getVehiclesSwapiUrls() {
-        return vehiclesSwapiUrls;
+    public List<String> getVehicles() {
+        return vehicles;
     }
 }

@@ -1,6 +1,7 @@
 package com.mittas.starwarswiki;
 
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.api.model.CharactersPage;
@@ -44,6 +45,14 @@ public class StarWarsRepository {
         return localDb.characterDao().getAllCharacters();
     }
 
+    public LiveData<List<Film>> getFilmsByCharacterId(final int characterId) {
+        return localDb.characterFilmJoinDao().getFilmsByCharacterId(characterId);
+    }
+
+    public LiveData<List<Vehicle>> getVehiclesByCharacterId(final int characterId) {
+        return localDb.characterVehicleJoinDao().getVehiclesByCharacterId(characterId);
+    }
+
     public LiveData<Character> getCharacterById(final int characterId) {
         return localDb.characterDao().getCharacterById(characterId);
     }
@@ -60,9 +69,14 @@ public class StarWarsRepository {
             public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
                 List<Character> characters = response.body().results;
 
-                executors.diskIO().execute(() -> localDb.characterDao().insertCharacters(characters));
-
-                insertCharacterTableLinks(characters);
+                if (characters != null) {
+                    for(Character character : characters) {
+                        executors.diskIO().execute(() -> {
+                            long charId = localDb.characterDao().insertCharacter(character);
+                            insertCharacterTableLinks(character, charId);
+                        });
+                    }
+                }
 
                 if (response.body().next != null) {
                     loadCharacterPage(page + 1);
@@ -76,22 +90,27 @@ public class StarWarsRepository {
         });
     }
 
-    private void insertCharacterTableLinks(List<Character> characters) {
-        for (Character character : characters) {
-            int charId = character.getId();
-
+    private void insertCharacterTableLinks(Character character, long charId) {
             // Create character-film link table
-            for (String filmUrl : character.getFilmsSwapiUrls()) {
-                int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
-                CharacterFilmJoin charFilmJoin = new CharacterFilmJoin(charId, filmId);
-                executors.diskIO().execute(() -> localDb.characterFilmJoinDao().insert(charFilmJoin));
-            }
+            List<String> filmsUrls = character.getFilms();
+            if (filmsUrls != null) {
+                for (String filmUrl : filmsUrls) {
+                    int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
+                    CharacterFilmJoin charFilmJoin = new CharacterFilmJoin((int) charId, filmId);
+
+                    Log.d("KAVLI", "charId = " + charId + " filmId = "  + filmId);
+
+                    executors.diskIO().execute(() -> localDb.characterFilmJoinDao().insert(charFilmJoin));
+                }
 
             // Create character-vehicle link table
-            for (String vehicleUrl : character.getVehiclesSwapiUrls()) {
-                int vehicleId = SwapiHelperMethods.getIdFromUrl(vehicleUrl);
-                CharacterVehicleJoin charVehicleJoin = new CharacterVehicleJoin(charId, vehicleId);
-                executors.diskIO().execute(() -> localDb.characterVehicleJoinDao().insert(charVehicleJoin));
+            List<String> vehiclesUrls = character.getVehicles();
+            if (vehiclesUrls != null) {
+                for (String vehicleUrl : vehiclesUrls) {
+                    int vehicleId = SwapiHelperMethods.getIdFromUrl(vehicleUrl);
+                    CharacterVehicleJoin charVehicleJoin = new CharacterVehicleJoin((int) charId, vehicleId);
+                    executors.diskIO().execute(() -> localDb.characterVehicleJoinDao().insert(charVehicleJoin));
+                }
             }
         }
     }
@@ -102,7 +121,9 @@ public class StarWarsRepository {
             public void onResponse(Call<FilmsPage> call, Response<FilmsPage> response) {
                 List<Film> films = response.body().results;
 
-                executors.diskIO().execute(() -> localDb.filmDao().insertFilms(films));
+                if (films != null) {
+                    executors.diskIO().execute(() -> localDb.filmDao().insertFilms(films));
+                }
 
                 if (response.body().next != null) {
                     loadFilmPage(page + 1);
@@ -122,7 +143,9 @@ public class StarWarsRepository {
             public void onResponse(Call<VehiclesPage> call, Response<VehiclesPage> response) {
                 List<Vehicle> vehicles = response.body().results;
 
-                executors.diskIO().execute(() -> localDb.vehicleDao().insertVehicles(vehicles));
+                if (vehicles != null) {
+                    executors.diskIO().execute(() -> localDb.vehicleDao().insertVehicles(vehicles));
+                }
 
                 if (response.body().next != null) {
                     loadVehiclePage(page + 1);

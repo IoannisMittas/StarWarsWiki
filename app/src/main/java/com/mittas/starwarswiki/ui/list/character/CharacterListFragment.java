@@ -103,11 +103,6 @@ public class CharacterListFragment extends Fragment {
     }
 
     private void subscribeUi() {
-        viewModel.getAllCharacters().observe(this, new Observer<List<Character>>() {
-            @Override
-            public void onChanged(@Nullable List<Character> characters) {
-                adapter.setCharacters(characters);
-            }
-        });
+        viewModel.getAllCharacters().observe(this, characters -> adapter.setCharacters(characters));
     }
 }

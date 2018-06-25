@@ -8,10 +8,13 @@ public class Film {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String name;
+    private String title;
 
-    public Film(String name) {
-        this.name = name;
+    public Film() {
+    }
+
+    public Film(String title) {
+        this.title = title;
     }
 
     public int getId() {
@@ -22,11 +25,11 @@ public class Film {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

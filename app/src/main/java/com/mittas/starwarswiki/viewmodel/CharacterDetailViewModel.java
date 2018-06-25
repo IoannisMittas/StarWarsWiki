@@ -10,10 +10,16 @@ import android.support.annotation.NonNull;
 import com.mittas.starwarswiki.BasicApp;
 import com.mittas.starwarswiki.StarWarsRepository;
 import com.mittas.starwarswiki.data.entity.Character;
+import com.mittas.starwarswiki.data.entity.Film;
+import com.mittas.starwarswiki.data.entity.Vehicle;
+
+import java.util.List;
 
 public class CharacterDetailViewModel extends AndroidViewModel {
     private final StarWarsRepository repository;
     private final LiveData<Character> observableCharacter;
+    private final LiveData<List<Film>> observableFilms;
+    private final LiveData<List<Vehicle>> observableVehicles;
     private final MutableLiveData<Integer> idInput;
 
 
@@ -26,6 +32,12 @@ public class CharacterDetailViewModel extends AndroidViewModel {
 
         observableCharacter = Transformations.switchMap(idInput, id ->
                 repository.getCharacterById(id));
+
+        observableFilms = Transformations.switchMap(idInput, id ->
+                repository.getFilmsByCharacterId(id));
+
+        observableVehicles = Transformations.switchMap(idInput, id ->
+                repository.getVehiclesByCharacterId(id));
     }
 
     public LiveData<Character> getCharacterById(int characterId) {
@@ -33,7 +45,19 @@ public class CharacterDetailViewModel extends AndroidViewModel {
         return observableCharacter;
     }
 
+    public LiveData<List<Film>> getFilmsByCharacterId(int characterId) {
+        setCharacterId(characterId);
+        return observableFilms;
+    }
+
+    public LiveData<List<Vehicle>> getVehiclesByCharacterId(int characterId) {
+        setCharacterId(characterId);
+        return observableVehicles;
+    }
+
     private void setCharacterId(int characterId) {
         this.idInput.setValue(characterId);
     }
+
+
 }

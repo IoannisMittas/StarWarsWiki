@@ -17,6 +17,9 @@ public class FavouriteCharacter {
 
     private int characterId;
 
+    public FavouriteCharacter() {
+    }
+
     public FavouriteCharacter(int characterId) {
         this.characterId = characterId;
     }
