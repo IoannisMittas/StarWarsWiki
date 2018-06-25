@@ -37,8 +37,6 @@ public class FavouriteCharacterListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favourite_character_list, container, false);
 
-        setHasOptionsMenu(true);
-
         setupRecyclerView(rootView);
 
         return rootView;

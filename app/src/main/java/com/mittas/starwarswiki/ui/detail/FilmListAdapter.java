@@ -2,7 +2,6 @@ package com.mittas.starwarswiki.ui.detail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FilmListAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detail_list_item, parent, false));
+                .inflate(R.layout.simple_list_item, parent, false));
     }
 
     @Override

@@ -23,13 +23,13 @@ public class FavouriteCharacterListAdapter extends RecyclerView.Adapter<Favourit
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FavouriteCharacterListAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.character_list_item, parent, false));
+                .inflate(R.layout.simple_list_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Character character = favouriteCharList.get(position);
-        holder.nameTextView.setText(character.getName());
+                holder.nameTextView.setText(character.getName());
     }
 
     @Override

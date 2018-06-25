@@ -6,11 +6,11 @@ import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "favourite_character",
-        foreignKeys = @ForeignKey(entity = Character.class,
-                parentColumns = "id",
-                childColumns = "characterId",
-                onDelete = CASCADE))
+//foreignKeys = @ForeignKey(entity = Character.class,
+//        parentColumns = "id",
+//        childColumns = "characterId",
+//        onDelete = CASCADE)
+@Entity(tableName = "favourite_character")
 public class FavouriteCharacter {
     @PrimaryKey(autoGenerate = true)
     private int id;
