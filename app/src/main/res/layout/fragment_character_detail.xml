@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="4dp">
+    android:layout_height="wrap_content">
 
-    <!-- Name -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp">
-
-        <TextView
-            android:id="@+id/title_textview_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/title_textview_name"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
-
-        <TextView
-            android:id="@+id/name_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-    </LinearLayout>
-
-    <!-- Birth year -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp">
-
-        <TextView
-            android:id="@+id/title_textview_birth_year"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/title_textview_birth_year"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
-
-        <TextView
-            android:id="@+id/birth_year_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-    </LinearLayout>
-
-    <!-- Homeworld -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp">
-
-        <TextView
-            android:id="@+id/title_textview_homeworld"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/title_textview_homeworld"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
-
-        <TextView
-            android:id="@+id/homeworld_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-    </LinearLayout>
-
-    <!-- Films -->
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:padding="4dp">
-
-       <TextView
-           android:id="@+id/title_textview_films"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/title_textview_films"
-           android:textAppearance="@android:style/TextAppearance.Material.Headline" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/films_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-   </LinearLayout>
-
-    <!-- Vehicles -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="4dp">
 
-        <TextView
-            android:id="@+id/title_textview_vehicles"
+        <!-- Name -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_textview_vehicles"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+            android:orientation="horizontal"
+            android:padding="4dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/vehicles_recyclerview"
+            <TextView
+                android:id="@+id/title_textview_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title_textview_name"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <TextView
+                android:id="@+id/name_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        </LinearLayout>
+
+        <!-- Birth year -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/title_textview_birth_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title_textview_birth_year"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <TextView
+                android:id="@+id/birth_year_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        </LinearLayout>
+
+        <!-- Homeworld -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/title_textview_homeworld"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title_textview_homeworld"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <TextView
+                android:id="@+id/homeworld_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        </LinearLayout>
+
+        <!-- Films -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/title_textview_films"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_textview_films"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/films_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Vehicles -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/title_textview_vehicles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_textview_vehicles"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vehicles_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 
-
-
-</LinearLayout>
-
-
-
+</android.support.v4.widget.NestedScrollView>
