@@ -37,4 +37,8 @@ public class CharacterListViewModel extends AndroidViewModel{
     public void loadData() {
         repository.loadData();
     }
+
+    public void onFavouriteToggleClicked(int charId) {
+        repository.onFavouriteToggleClicked(charId);
+    }
 }

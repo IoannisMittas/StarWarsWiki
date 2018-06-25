@@ -1,6 +1,5 @@
 package com.mittas.starwarswiki.ui.list.character;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 
@@ -20,10 +19,10 @@ import android.view.ViewGroup;
 import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
+import com.mittas.starwarswiki.ui.list.favourite.FavouriteCharacterListActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CharacterListFragment extends Fragment {
@@ -34,12 +33,16 @@ public class CharacterListFragment extends Fragment {
     private CharacterListAdapter adapter;
     private RecyclerView recyclerView;
 
-    private CharacterListAdapter.OnItemClickListener itemClickListener = (view, characterId) -> {
+    private CharacterListAdapter.OnItemClickListener listItemClickListener = (view, characterId) -> {
         // Start CharacterDetailActivity
         Intent intent = new Intent(getActivity(), CharacterDetailActivity.class);
         intent.putExtra(EXTRA_CHARACTER_ID, characterId);
         startActivity(intent);
     };
+
+    private CharacterListAdapter.OnItemClickListener favouriteToggleClickListener = ((view, charId) -> {
+        viewModel.onFavouriteToggleClicked(charId);
+    });
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -78,11 +81,10 @@ public class CharacterListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // TODO : add case
-//            case R.id.action_sign_out:
-//                FirebaseHelper.handleSignOutWithFirebaseUI(getActivity());
-//                signInWithFirebaseUI();
-//                return true;
+            case R.id.action_favourites:
+                Intent intent = new Intent(getActivity(), FavouriteCharacterListActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -98,7 +100,7 @@ public class CharacterListFragment extends Fragment {
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        adapter = new CharacterListAdapter(new ArrayList<Character>(), itemClickListener);
+        adapter = new CharacterListAdapter(new ArrayList<Character>(), listItemClickListener, favouriteToggleClickListener);
         recyclerView.setAdapter(adapter);
     }
 

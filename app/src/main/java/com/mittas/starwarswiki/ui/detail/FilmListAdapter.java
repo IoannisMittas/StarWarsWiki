@@ -2,7 +2,6 @@ package com.mittas.starwarswiki.ui.detail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import com.mittas.starwarswiki.data.entity.Film;
 
 import java.util.List;
 
-public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHolder>{
+public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHolder> {
     private List<Film> filmList;
 
     public FilmListAdapter(List<Film> filmList) {
@@ -24,7 +23,7 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FilmListAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detail_list_item, parent, false));
+                .inflate(R.layout.simple_list_item, parent, false));
     }
 
     @Override
@@ -38,15 +37,12 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
         return filmList.size();
     }
 
-    public void setFilms (List<Film> filmList) {
+    public void setFilms(List<Film> filmList) {
         this.filmList = filmList;
-
-        Log.d("adapter", "" + filmList.size());
-
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
 
         public ViewHolder(View view) {

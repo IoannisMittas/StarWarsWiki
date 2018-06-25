@@ -11,6 +11,7 @@ import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
+import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import com.mittas.starwarswiki.data.entity.Film;
 import com.mittas.starwarswiki.data.entity.Planet;
 import com.mittas.starwarswiki.data.entity.Vehicle;
@@ -46,6 +47,14 @@ public class StarWarsRepository {
         return localDb.characterDao().getAllCharacters();
     }
 
+    public LiveData<List<Character>> getAllFavouriteCharacters() {
+        return localDb.favouriteCharacterDao().getAllFavouriteCharacters();
+    }
+
+    public LiveData<Character> getCharacterById(final int characterId) {
+        return localDb.characterDao().getCharacterById(characterId);
+    }
+
     public LiveData<List<Film>> getFilmsByCharacterId(final int characterId) {
         return localDb.characterFilmJoinDao().getFilmsByCharacterId(characterId);
     }
@@ -54,8 +63,36 @@ public class StarWarsRepository {
         return localDb.characterVehicleJoinDao().getVehiclesByCharacterId(characterId);
     }
 
-    public LiveData<Character> getCharacterById(final int characterId) {
-        return localDb.characterDao().getCharacterById(characterId);
+    public void onFavouriteToggleClicked(final int characterId) {
+        executors.diskIO().execute(() -> {
+            int isFavourite = localDb.characterDao().isCharacterFavourite(characterId);
+
+            // Favourite toggle has been clicked. So, if character was favourite, we
+            // remove it from favourites. And vice versa.
+            if (isFavourite == 1) {
+                removeCharFromFavouriteCharacterTable(characterId);
+
+                localDb.characterDao().unFavouriteChar(characterId);
+            } else {
+                insertCharIntoFavouriteCharacterTable(characterId);
+
+                localDb.characterDao().setCharAsFavourite(characterId);
+            }
+        });
+    }
+
+    private void insertCharIntoFavouriteCharacterTable(final int characterId) {
+        executors.diskIO().execute(() -> {
+            FavouriteCharacter favouriteChar = new FavouriteCharacter();
+            long favouriteCharId = localDb.favouriteCharacterDao().insert(favouriteChar);
+            localDb.favouriteCharacterDao().updateFavouriteCharacterId((int) favouriteCharId, characterId);
+        });
+    }
+
+    private void removeCharFromFavouriteCharacterTable(final int characterId) {
+        executors.diskIO().execute(() -> {
+            localDb.favouriteCharacterDao().deleteByCharacterId(characterId);
+        });
     }
 
     public void loadData() {
@@ -101,7 +138,7 @@ public class StarWarsRepository {
             for (String filmUrl : filmsUrls) {
                 int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
                 CharacterFilmJoin charFilmJoin = new CharacterFilmJoin((int) charId, filmId);
-               localDb.characterFilmJoinDao().insert(charFilmJoin);
+                localDb.characterFilmJoinDao().insert(charFilmJoin);
             }
 
             // Create character-vehicle link table
@@ -118,13 +155,13 @@ public class StarWarsRepository {
 
     private void updateCharacterHomeworldName(Character character, long charId) {
         String homeworldUrl = character.getHomeworldUrl();
-        if(homeworldUrl != null) {
+        if (homeworldUrl != null) {
             int planetId = SwapiHelperMethods.getIdFromUrl(homeworldUrl);
 
             // TODO: fix possible syncrhonization problems
             Planet planet = localDb.planetDao().getPlanetById(planetId);
 
-            if(planet != null) {
+            if (planet != null) {
                 localDb.characterDao().updateCharHomeworldNameById((int) charId, planet.getName());
             }
         }

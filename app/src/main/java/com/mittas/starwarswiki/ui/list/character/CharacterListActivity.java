@@ -29,5 +29,4 @@ public class CharacterListActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.character_list_activity_menu, menu);
         return true;
     }
-
 }
