@@ -11,6 +11,7 @@ import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
+import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import com.mittas.starwarswiki.data.entity.Film;
 import com.mittas.starwarswiki.data.entity.Planet;
 import com.mittas.starwarswiki.data.entity.Vehicle;
@@ -59,11 +60,17 @@ public class StarWarsRepository {
     }
 
     public void setCharAsFavourite(final int characterId) {
-
+        executors.diskIO().execute(() -> {
+            FavouriteCharacter favouriteChar = new FavouriteCharacter();
+            long favouriteCharId = localDb.favouriteCharacterDao().insert(favouriteChar);
+            localDb.favouriteCharacterDao().updateFavouriteCharacterId((int) favouriteCharId, characterId);
+        });
     }
 
     public void removeCharFromFavourites(final int characterId) {
-
+        executors.diskIO().execute(() -> {
+            localDb.favouriteCharacterDao().deleteByCharacterId(characterId);
+        });
     }
 
 
@@ -110,7 +117,7 @@ public class StarWarsRepository {
             for (String filmUrl : filmsUrls) {
                 int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
                 CharacterFilmJoin charFilmJoin = new CharacterFilmJoin((int) charId, filmId);
-               localDb.characterFilmJoinDao().insert(charFilmJoin);
+                localDb.characterFilmJoinDao().insert(charFilmJoin);
             }
 
             // Create character-vehicle link table
@@ -127,13 +134,13 @@ public class StarWarsRepository {
 
     private void updateCharacterHomeworldName(Character character, long charId) {
         String homeworldUrl = character.getHomeworldUrl();
-        if(homeworldUrl != null) {
+        if (homeworldUrl != null) {
             int planetId = SwapiHelperMethods.getIdFromUrl(homeworldUrl);
 
             // TODO: fix possible syncrhonization problems
             Planet planet = localDb.planetDao().getPlanetById(planetId);
 
-            if(planet != null) {
+            if (planet != null) {
                 localDb.characterDao().updateCharHomeworldNameById((int) charId, planet.getName());
             }
         }
