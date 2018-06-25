@@ -76,7 +76,7 @@ public class CharacterDetailFragment extends Fragment {
             if (character != null) {
                 nameTextView.setText(character.getName());
                 birthYearTextView.setText(character.getBirthYear());
-                homeworldTextView.setText(character.getHomeworld());
+                homeworldTextView.setText(character.getHomeworldName());
             }
         });
 
@@ -85,7 +85,6 @@ public class CharacterDetailFragment extends Fragment {
         viewModel.getVehiclesByCharacterId(characterId).observe(this, vehicles -> vehicleListAdapter.setVehicles(vehicles));
 
     }
-
 
     private void setViews(View rootView) {
         nameTextView = rootView.findViewById(R.id.name_textview);

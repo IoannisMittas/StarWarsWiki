@@ -2,6 +2,7 @@ package com.mittas.starwarswiki.api;
 
 import com.mittas.starwarswiki.api.model.FilmsPage;
 import com.mittas.starwarswiki.api.model.CharactersPage;
+import com.mittas.starwarswiki.api.model.PlanetsPage;
 import com.mittas.starwarswiki.api.model.VehiclesPage;
 
 import retrofit2.Call;
@@ -18,4 +19,8 @@ public interface SwapiService {
 
     @GET("vehicles/")
     Call<VehiclesPage> getVehiclesPage(@Query("page") int page);
+
+    @GET("planets/")
+    Call<PlanetsPage> getPlanetsPage(@Query("page") int page);
+
 }

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.mittas.starwarswiki.data.dao.PlanetDao;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.dao.CharacterDao;
 import com.mittas.starwarswiki.data.dao.CharacterFilmJoinDao;
@@ -16,10 +17,11 @@ import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
 import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import com.mittas.starwarswiki.data.entity.Film;
+import com.mittas.starwarswiki.data.entity.Planet;
 import com.mittas.starwarswiki.data.entity.Vehicle;
 
 @Database(entities = {Character.class, CharacterFilmJoin.class, CharacterVehicleJoin.class,
-        FavouriteCharacter.class, Film.class, Vehicle.class}, version = 1)
+        FavouriteCharacter.class, Film.class, Vehicle.class, Planet.class}, version = 1)
 public abstract class LocalDatabase extends RoomDatabase{
     private static LocalDatabase INSTANCE;
 
@@ -31,6 +33,7 @@ public abstract class LocalDatabase extends RoomDatabase{
     public abstract FavouriteCharacterDao favouriteCharacterDao();
     public abstract FilmDao filmDao();
     public abstract VehicleDao vehicleDao();
+    public abstract PlanetDao planetDao();
 
     public static LocalDatabase getInstance(final Context context) {
         if (INSTANCE == null) {

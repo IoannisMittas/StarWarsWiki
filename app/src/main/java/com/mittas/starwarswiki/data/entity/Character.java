@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 @Entity
@@ -14,26 +16,29 @@ public class Character {
 
     private String name;
 
-    @ColumnInfo(name = "birth_year")
+    @SerializedName("birth_year")
     private String birthYear;
 
-    // TODO fix
-    private String homeworld;
+    @Ignore
+    @SerializedName("homeworld")
+    private String homeworldUrl;
+
+    private String homeworldName;
 
     @Ignore
-    private List<String> films;
+    @SerializedName("films")
+    private List<String> filmsUrls;
 
     @Ignore
-    private List<String> vehicles;
+    @SerializedName("vehicles")
+    private List<String> vehiclesUrls;
 
     public Character() {}
 
-    public Character(String name, String birthYear, String homeworld) {
+    public Character(String name, String birthYear, String homeworldName) {
         this.name = name;
         this.birthYear = birthYear;
-        this.homeworld = homeworld;
-        this.films = films;
-        this.vehicles = vehicles;
+        this.homeworldName = homeworldName;
     }
 
     public int getId() {
@@ -60,19 +65,35 @@ public class Character {
         this.birthYear = birthYear;
     }
 
-    public String getHomeworld() {
-        return homeworld;
+    public String getHomeworldName() {
+        return homeworldName;
     }
 
-    public void setHomeworld(String homeworld) {
-        this.homeworld = homeworld;
+    public void setHomeworldName(String homeworldName) {
+        this.homeworldName = homeworldName;
     }
 
-    public List<String> getFilms() {
-        return films;
+    public String getHomeworldUrl() {
+        return homeworldUrl;
     }
 
-    public List<String> getVehicles() {
-        return vehicles;
+    public void setHomeworldUrl(String homeworldUrl) {
+        this.homeworldUrl = homeworldUrl;
+    }
+
+    public List<String> getFilmsUrls() {
+        return filmsUrls;
+    }
+
+    public void setFilmsUrls(List<String> filmsUrls) {
+        this.filmsUrls = filmsUrls;
+    }
+
+    public List<String> getVehiclesUrls() {
+        return vehiclesUrls;
+    }
+
+    public void setVehiclesUrls(List<String> vehiclesUrls) {
+        this.vehiclesUrls = vehiclesUrls;
     }
 }

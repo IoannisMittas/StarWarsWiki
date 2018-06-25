@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+
 import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.ui.list.character.CharacterListFragment;
 

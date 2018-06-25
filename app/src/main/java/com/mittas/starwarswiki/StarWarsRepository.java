@@ -1,17 +1,18 @@
 package com.mittas.starwarswiki;
 
 import android.arch.lifecycle.LiveData;
-import android.util.Log;
 
 import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.api.model.CharactersPage;
 import com.mittas.starwarswiki.api.model.FilmsPage;
+import com.mittas.starwarswiki.api.model.PlanetsPage;
 import com.mittas.starwarswiki.api.model.VehiclesPage;
 import com.mittas.starwarswiki.data.LocalDatabase;
 import com.mittas.starwarswiki.data.entity.Character;
 import com.mittas.starwarswiki.data.entity.CharacterFilmJoin;
 import com.mittas.starwarswiki.data.entity.CharacterVehicleJoin;
 import com.mittas.starwarswiki.data.entity.Film;
+import com.mittas.starwarswiki.data.entity.Planet;
 import com.mittas.starwarswiki.data.entity.Vehicle;
 import com.mittas.starwarswiki.util.SwapiHelperMethods;
 
@@ -58,28 +59,30 @@ public class StarWarsRepository {
     }
 
     public void loadData() {
-        loadCharacterPage(1);
-        loadFilmPage(1);
-        loadVehiclePage(1);
+        loadCharactersPage(1);
+        loadFilmsPage(1);
+        loadVehiclesPage(1);
+        loadPlanetsPage(1);
     }
 
-    private void loadCharacterPage(int page) {
+    private void loadCharactersPage(int page) {
         service.getCharactersPage(page).enqueue(new Callback<CharactersPage>() {
             @Override
             public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
                 List<Character> characters = response.body().results;
 
                 if (characters != null) {
-                    for(Character character : characters) {
+                    for (Character character : characters) {
                         executors.diskIO().execute(() -> {
                             long charId = localDb.characterDao().insertCharacter(character);
                             insertCharacterTableLinks(character, charId);
+                            updateCharacterHomeworldName(character, charId);
                         });
                     }
                 }
 
                 if (response.body().next != null) {
-                    loadCharacterPage(page + 1);
+                    loadCharactersPage(page + 1);
                 }
             }
 
@@ -90,32 +93,44 @@ public class StarWarsRepository {
         });
     }
 
+
     private void insertCharacterTableLinks(Character character, long charId) {
-            // Create character-film link table
-            List<String> filmsUrls = character.getFilms();
-            if (filmsUrls != null) {
-                for (String filmUrl : filmsUrls) {
-                    int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
-                    CharacterFilmJoin charFilmJoin = new CharacterFilmJoin((int) charId, filmId);
-
-                    Log.d("KAVLI", "charId = " + charId + " filmId = "  + filmId);
-
-                    executors.diskIO().execute(() -> localDb.characterFilmJoinDao().insert(charFilmJoin));
-                }
+        // Create character-film link table
+        List<String> filmsUrls = character.getFilmsUrls();
+        if (filmsUrls != null) {
+            for (String filmUrl : filmsUrls) {
+                int filmId = SwapiHelperMethods.getIdFromUrl(filmUrl);
+                CharacterFilmJoin charFilmJoin = new CharacterFilmJoin((int) charId, filmId);
+               localDb.characterFilmJoinDao().insert(charFilmJoin);
+            }
 
             // Create character-vehicle link table
-            List<String> vehiclesUrls = character.getVehicles();
+            List<String> vehiclesUrls = character.getVehiclesUrls();
             if (vehiclesUrls != null) {
                 for (String vehicleUrl : vehiclesUrls) {
                     int vehicleId = SwapiHelperMethods.getIdFromUrl(vehicleUrl);
                     CharacterVehicleJoin charVehicleJoin = new CharacterVehicleJoin((int) charId, vehicleId);
-                    executors.diskIO().execute(() -> localDb.characterVehicleJoinDao().insert(charVehicleJoin));
+                    localDb.characterVehicleJoinDao().insert(charVehicleJoin);
                 }
             }
         }
     }
 
-    private void loadFilmPage(int page) {
+    private void updateCharacterHomeworldName(Character character, long charId) {
+        String homeworldUrl = character.getHomeworldUrl();
+        if(homeworldUrl != null) {
+            int planetId = SwapiHelperMethods.getIdFromUrl(homeworldUrl);
+
+            // TODO: fix possible syncrhonization problems
+            Planet planet = localDb.planetDao().getPlanetById(planetId);
+
+            if(planet != null) {
+                localDb.characterDao().updateCharHomeworldNameById((int) charId, planet.getName());
+            }
+        }
+    }
+
+    private void loadFilmsPage(int page) {
         service.getFilmsPage(page).enqueue(new Callback<FilmsPage>() {
             @Override
             public void onResponse(Call<FilmsPage> call, Response<FilmsPage> response) {
@@ -126,7 +141,7 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadFilmPage(page + 1);
+                    loadFilmsPage(page + 1);
                 }
             }
 
@@ -137,7 +152,7 @@ public class StarWarsRepository {
         });
     }
 
-    private void loadVehiclePage(int page) {
+    private void loadVehiclesPage(int page) {
         service.getVehiclesPage(page).enqueue(new Callback<VehiclesPage>() {
             @Override
             public void onResponse(Call<VehiclesPage> call, Response<VehiclesPage> response) {
@@ -148,12 +163,34 @@ public class StarWarsRepository {
                 }
 
                 if (response.body().next != null) {
-                    loadVehiclePage(page + 1);
+                    loadVehiclesPage(page + 1);
                 }
             }
 
             @Override
             public void onFailure(Call<VehiclesPage> call, Throwable t) {
+                // do nothing
+            }
+        });
+    }
+
+    private void loadPlanetsPage(int page) {
+        service.getPlanetsPage(page).enqueue(new Callback<PlanetsPage>() {
+            @Override
+            public void onResponse(Call<PlanetsPage> call, Response<PlanetsPage> response) {
+                List<Planet> planets = response.body().results;
+
+                if (planets != null) {
+                    executors.diskIO().execute(() -> localDb.planetDao().insertPlanets(planets));
+                }
+
+                if (response.body().next != null) {
+                    loadPlanetsPage(page + 1);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlanetsPage> call, Throwable t) {
                 // do nothing
             }
         });

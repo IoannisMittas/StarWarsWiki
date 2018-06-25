@@ -24,4 +24,7 @@ public interface CharacterDao {
 
     @Insert(onConflict = REPLACE)
     void insertCharacters(List<Character> characters);
+
+    @Query("UPDATE character SET homeworldName = :name WHERE id = :id")
+    void updateCharHomeworldNameById(int id, String name);
 }
