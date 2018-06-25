@@ -77,6 +77,9 @@ public class StarWarsRepository {
         });
     }
 
+    public void onFavouriteToggleClicked(final int characterId) {
+
+    }
 
     public void loadData() {
         loadCharactersPage(1);

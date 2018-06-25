@@ -15,11 +15,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.mittas.starwarswiki.R;
 import com.mittas.starwarswiki.data.entity.Character;
-import com.mittas.starwarswiki.data.entity.FavouriteCharacter;
 import com.mittas.starwarswiki.ui.detail.CharacterDetailActivity;
 import com.mittas.starwarswiki.ui.list.favourite.FavouriteCharacterListActivity;
 import com.mittas.starwarswiki.viewmodel.CharacterListViewModel;
@@ -35,19 +33,15 @@ public class CharacterListFragment extends Fragment {
     private CharacterListAdapter adapter;
     private RecyclerView recyclerView;
 
-    private CharacterListAdapter.OnItemClickListener itemClickListener = (view, characterId) -> {
+    private CharacterListAdapter.OnItemClickListener listItemClickListener = (view, characterId) -> {
         // Start CharacterDetailActivity
         Intent intent = new Intent(getActivity(), CharacterDetailActivity.class);
         intent.putExtra(EXTRA_CHARACTER_ID, characterId);
         startActivity(intent);
     };
 
-    private CharacterListAdapter.OnFavouriteToggleListener favouriteToggleListener = ((buttonView, isChecked, charId) -> {
-        if (isChecked) {
-            viewModel.setCharAsFavourite(charId);
-        } else {
-            viewModel.removeCharFromFavourites(charId);
-        }
+    private CharacterListAdapter.OnItemClickListener favouriteToggleClickListener = ((view, charId) -> {
+        viewModel.onFavouriteToggleClicked(charId);
     });
 
     @Override
@@ -106,7 +100,7 @@ public class CharacterListFragment extends Fragment {
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        adapter = new CharacterListAdapter(new ArrayList<Character>(), itemClickListener, favouriteToggleListener);
+        adapter = new CharacterListAdapter(new ArrayList<Character>(), listItemClickListener, favouriteToggleClickListener);
         recyclerView.setAdapter(adapter);
     }
 

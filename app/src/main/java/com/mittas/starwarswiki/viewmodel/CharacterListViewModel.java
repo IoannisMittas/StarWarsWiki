@@ -45,4 +45,8 @@ public class CharacterListViewModel extends AndroidViewModel{
     public void removeCharFromFavourites(int charId) {
         repository.removeCharFromFavourites(charId);
     }
+
+    public void onFavouriteToggleClicked(int charId) {
+        repository.onFavouriteToggleClicked(charId);
+    }
 }

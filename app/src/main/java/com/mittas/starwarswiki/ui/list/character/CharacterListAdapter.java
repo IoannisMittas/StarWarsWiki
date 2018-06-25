@@ -5,9 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.mittas.starwarswiki.R;
 
@@ -17,22 +16,18 @@ import java.util.List;
 
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder> {
     private List<Character> characterList;
-    private OnItemClickListener clickListener;
-    private OnFavouriteToggleListener favouriteToggleListener;
+    private OnItemClickListener listItemClickListener;
+    private OnItemClickListener favouriteToggleClickListener;
 
     public interface OnItemClickListener {
         void onItemClick(View view, int characterId);
     }
 
-    public interface OnFavouriteToggleListener {
-        void onCheckedChanged(CompoundButton buttonView, boolean isChecked, int charId);
-    }
-
-    public CharacterListAdapter(List<Character> characterList, OnItemClickListener clickListener,
-                                OnFavouriteToggleListener favouriteToggleListener) {
+    public CharacterListAdapter(List<Character> characterList, OnItemClickListener listItemClickListener,
+                                OnItemClickListener favouriteToggleClickListener) {
         this.characterList = characterList;
-        this.clickListener = clickListener;
-        this.favouriteToggleListener = favouriteToggleListener;
+        this.listItemClickListener = listItemClickListener;
+        this.favouriteToggleClickListener = favouriteToggleClickListener;
     }
 
     @NonNull
@@ -50,14 +45,14 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         holder.itemView.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onItemClick(v, character.getId());
+                listItemClickListener.onItemClick(v, character.getId());
             }
         }));
 
-        holder.favouriteToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.favouriteToggle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                favouriteToggleListener.onCheckedChanged(buttonView, isChecked, character.getId());
+            public void onClick(View v) {
+                favouriteToggleClickListener.onItemClick(v, character.getId());
             }
         });
     }
@@ -74,7 +69,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
-        private ToggleButton favouriteToggle;
+        private ImageButton favouriteToggle;
 
         ViewHolder(View view) {
             super(view);
@@ -82,5 +77,4 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
             favouriteToggle = view.findViewById(R.id.favouriteToggle);
         }
     }
-
 }

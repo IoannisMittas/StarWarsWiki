@@ -17,7 +17,7 @@ public class FavouriteCharacterListActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);git co
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             FavouriteCharacterListFragment fragment = new FavouriteCharacterListFragment();
