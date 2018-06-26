@@ -7,8 +7,11 @@ The user can scroll the character list and click on a character to open it's det
 Every list in the app was implemented with RecyclerViews and the appropriate adapters.
 
 When the user press the favourite button of a character, the character is saved in the favourite character list.
-If the user pressed the button again, he is removed from the list. From the settings menu, the user can open the Favourites screen
+If the user pressed the button again, he is removed from the list. From a button in the toolbar, the user can open the Favourites screen
 to see a list of his favourite users.
+
+There is also a sorting button in the toolbar. If it's pressed, characters default sorting by name turns into sorting by birth year.
+If it's pressed again, it's turned again into sorting by name.
 
 The app is based in MVVM design pattern. The below  diagram from the official Android Guide to App Architecture shows a rough diagram of
 the app architecture: https://developer.android.com/topic/libraries/architecture/images/final-architecture.png
