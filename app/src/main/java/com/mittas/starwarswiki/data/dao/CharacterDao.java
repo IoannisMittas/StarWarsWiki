@@ -18,7 +18,10 @@ public interface CharacterDao {
     LiveData<Character> getCharacterById(int id);
 
     @Query("SELECT * FROM character ORDER BY character.name ASC")
-    LiveData<List<Character>> getAllCharacters();
+    LiveData<List<Character>> getAllCharactersSortedByName();
+
+    @Query("SELECT * FROM character ORDER BY character.birthYear ASC")
+    LiveData<List<Character>> getAllCharactersSortedByYear();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertCharacter(Character character);

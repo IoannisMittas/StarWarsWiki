@@ -12,5 +12,6 @@
     <string name="title_textview_vehicles">Vehicles</string>
 
     <string name="action_favourites">Favourites</string>
+    <string name="action_sort">Sort</string>
 
 </resources>
