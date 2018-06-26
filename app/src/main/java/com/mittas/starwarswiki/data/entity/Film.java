@@ -1,9 +1,10 @@
 package com.mittas.starwarswiki.data.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = {"title"}, unique = true)})
 public class Film {
     @PrimaryKey(autoGenerate = true)
     private int id;

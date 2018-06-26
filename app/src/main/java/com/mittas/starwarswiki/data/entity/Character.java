@@ -3,13 +3,14 @@ package com.mittas.starwarswiki.data.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity
+@Entity(indices = {@Index(value = {"name"}, unique = true)})
 public class Character {
     @PrimaryKey(autoGenerate = true)
     private int id;

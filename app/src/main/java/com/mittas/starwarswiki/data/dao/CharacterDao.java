@@ -3,6 +3,7 @@ package com.mittas.starwarswiki.data.dao;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.mittas.starwarswiki.data.entity.Character;
@@ -16,13 +17,13 @@ public interface CharacterDao {
     @Query("SELECT * FROM character WHERE id = :id")
     LiveData<Character> getCharacterById(int id);
 
-    @Query("SELECT * FROM character")
+    @Query("SELECT * FROM character ORDER BY character.name ASC")
     LiveData<List<Character>> getAllCharacters();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertCharacter(Character character);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertCharacters(List<Character> characters);
 
     @Query("UPDATE character SET homeworldName = :name WHERE id = :id")
