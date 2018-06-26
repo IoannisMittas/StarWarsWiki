@@ -1,6 +1,10 @@
 package com.mittas.starwarswiki;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.mittas.starwarswiki.api.SwapiService;
@@ -30,11 +34,19 @@ public class StarWarsRepository {
     private final SwapiService service;
     private final AppExecutors executors;
 
+    private MutableLiveData<LiveData<List<Character>>> allCharactersSorted;
+    private LiveData<List<Character>> observableAllCharacters;
 
     private StarWarsRepository(final LocalDatabase localDb, final SwapiService service, final AppExecutors executors) {
         this.localDb = localDb;
         this.service = service;
         this.executors = executors;
+
+        allCharactersSorted = new MutableLiveData<>();
+
+        observableAllCharacters = Transformations.switchMap(allCharactersSorted, liveData -> liveData);
+
+        allCharactersSorted.postValue(localDb.characterDao().getAllCharactersSortedByName());
     }
 
     public static StarWarsRepository getInstance(final LocalDatabase localDb, final SwapiService service, final AppExecutors executors) {
@@ -45,7 +57,15 @@ public class StarWarsRepository {
     }
 
     public LiveData<List<Character>> getAllCharacters() {
-        return localDb.characterDao().getAllCharacters();
+        return observableAllCharacters;
+    }
+
+    public void setDefaultSorting(boolean isDefault) {
+        if (isDefault) {
+            allCharactersSorted.postValue(localDb.characterDao().getAllCharactersSortedByName());
+        } else {
+            allCharactersSorted.postValue(localDb.characterDao().getAllCharactersSortedByYear());
+        }
     }
 
     public LiveData<List<Character>> getAllFavouriteCharacters() {

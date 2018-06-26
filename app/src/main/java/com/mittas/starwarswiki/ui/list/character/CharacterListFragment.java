@@ -29,6 +29,8 @@ public class CharacterListFragment extends Fragment {
     public static final String EXTRA_CHARACTER_ID = "EXTRA_CHARACTER_ID";
     public static final String TAG = "CHARACTER_LIST_FRAG";
 
+    private boolean isSortDefault = true;
+
     private CharacterListViewModel viewModel;
     private CharacterListAdapter adapter;
     private RecyclerView recyclerView;
@@ -62,7 +64,6 @@ public class CharacterListFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(CharacterListViewModel.class);
 
-        // TODO temporary
         viewModel.loadData();
 
         subscribeUi();
@@ -76,6 +77,10 @@ public class CharacterListFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FavouriteCharacterListActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_sort:
+                // Change sorting with every click
+                isSortDefault = !isSortDefault;
+                viewModel.setDefaultSorting(isSortDefault);
             default:
                 return super.onOptionsItemSelected(item);
         }

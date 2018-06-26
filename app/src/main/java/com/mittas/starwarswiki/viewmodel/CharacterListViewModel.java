@@ -41,4 +41,8 @@ public class CharacterListViewModel extends AndroidViewModel{
     public void onFavouriteToggleClicked(int charId) {
         repository.onFavouriteToggleClicked(charId);
     }
+
+    public void setDefaultSorting(boolean isDefault) {
+        repository.setDefaultSorting(isDefault);
+    }
 }
