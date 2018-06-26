@@ -4,7 +4,7 @@ When the app is opened for the first time, the data are fetched from http://swap
 Retrofit2 and GSON were used for the network requests.
 
 The user can scroll the character list and click on a character to open it's detailed view.
-Every list in the app was implemented with RecyclerView and the appropriate adapter.
+Every list in the app was implemented with a RecyclerView and an appropriate adapter.
 
 When the user presses the favourite button of a character, the character is saved in the favourite character list.
 If the user presses the button again, the character is removed from the list. From a button in the toolbar, the user can open the Favourites screen
