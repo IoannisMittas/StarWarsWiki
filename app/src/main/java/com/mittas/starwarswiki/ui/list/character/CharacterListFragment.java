@@ -68,15 +68,6 @@ public class CharacterListFragment extends Fragment {
         subscribeUi();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-//        if (!FirebaseHelper.isSignedIn()) {
-//            signInWithFirebaseUI();
-//        }
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

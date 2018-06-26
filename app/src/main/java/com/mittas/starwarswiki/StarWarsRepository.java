@@ -1,6 +1,7 @@
 package com.mittas.starwarswiki;
 
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import com.mittas.starwarswiki.api.SwapiService;
 import com.mittas.starwarswiki.api.model.CharactersPage;
@@ -96,6 +97,8 @@ public class StarWarsRepository {
     }
 
     public void loadData() {
+        Log.d("Repo", "loadData called");
+
         // Load pages recursively
         int startingPage = 1;
         loadCharacters(startingPage);
@@ -105,6 +108,9 @@ public class StarWarsRepository {
     }
 
     private void loadCharacters(int page) {
+
+        Log.d("Repo", "loadCharacter called");
+
         service.getCharactersPage(page).enqueue(new Callback<CharactersPage>() {
             @Override
             public void onResponse(Call<CharactersPage> call, Response<CharactersPage> response) {
@@ -170,6 +176,9 @@ public class StarWarsRepository {
     }
 
     private void loadFilms(int page) {
+        Log.d("Repo", "loadFilms called");
+
+
         service.getFilmsPage(page).enqueue(new Callback<FilmsPage>() {
             @Override
             public void onResponse(Call<FilmsPage> call, Response<FilmsPage> response) {
